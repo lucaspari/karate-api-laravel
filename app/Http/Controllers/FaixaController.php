@@ -53,23 +53,30 @@ class FaixaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $faixa = Faixa::find($id);
+        return $faixa ? response()->json($faixa, 200) :
+            response()->json(['message' => 'Faixa não encontrada!'], 404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!Faixa::find($id)) return response()->json(['message' => 'Faixa não encontrada!'], 404);
+
+        try {
+            $this->faixaService->validate_faixa($request);
+            $faixa = Faixa::find($id);
+            $faixa->nome = $request->nome;
+            $faixa->urlPath = $request->urlPath;
+            $faixa->save();
+            return response()->json(['message' => 'Faixa atualizada com sucesso!', 'data' =>
+            ["nome" => $faixa->nome, "urlPath" => $faixa->urlPath]], 200);
+        } catch (ValidationException $e) {
+            return response()->json($e->errors(), 422);
+        }
     }
 
     /**

@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\FaixaController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/faixas',[FaixaController::class,'index'])->name('faixa.index');
-Route::get('/faixas/save',[FaixaController::class,'store'])->name('faixa.store');
+
+Route::get('/faixas', [FaixaController::class, 'index'])->name('faixa.index');
+Route::post('/faixas/save', [FaixaController::class, 'store'])->name('faixa.store');
+Route::get("/faixas/{id}", [FaixaController::class, 'show'])->name('faixa.show');
+Route::put("/faixas/{id}", [FaixaController::class, 'update'])->name('faixa.update');
