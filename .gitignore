@@ -1,0 +1,31 @@
+# Laravel specific files and directories
+/.env
+/.env.*
+/node_modules
+/vendor
+/public/hot
+/public/storage
+/storage/*.key
+/storage/*.zip
+/storage/*.log
+/bootstrap/cache/*.php
+/.phpunit.result.cache
+/.phpstorm.meta.php
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.env.test
+
+# Other general ignores
+Thumbs.db
+.DS_Store
+
+# Editor/IDE specific files
+*.sublime-project
+*.sublime-workspace
+*.idea/
+*.vscode/
+
+# Ignore composer.lock for composer packages
+composer.lock
