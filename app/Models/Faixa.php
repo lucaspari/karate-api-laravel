@@ -12,11 +12,14 @@ class Faixa extends Model
     protected $fillable = [
         'id',
         'nome',
-        'urlPath'
+        'urlPath',
+        'update_at',
+        'created_at'
     ];
     protected $casts =[
-        'id' => 'string',
+        'id' =>'string',
     ];
+
   
 
     
