@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Kata extends Model
 {
+    
     use HasUuids, HasFactory;
+    protected $table = "katas";
     protected $fillable = [
         "id",
         "nome",

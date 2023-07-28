@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kata', function (Blueprint $table) {
+        Schema::create('katas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->string('descricao');
+            $table->string('descricao')->type('text');
             $table->string('url');
             $table->uuid('faixa_id');
             $table->foreign('faixa_id')->references('id')->on('faixas');

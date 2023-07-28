@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\FaixaController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\KataController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
