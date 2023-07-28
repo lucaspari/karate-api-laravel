@@ -54,7 +54,7 @@ class FaixaControllerTest extends TestCase
     public function test_can_create_faixa_with_valid_data()
     {
         // Make a POST request to the /api/faixas endpoint with valid data
-        $response = $this->postJson('/api/faixas/create', [
+        $response = $this->postJson('/api/faixas/', [
             'nome' => 'Faixa 1',
             'urlPath' => '/path/to/faixa1.mp3',
         ]);
@@ -75,7 +75,7 @@ class FaixaControllerTest extends TestCase
     public function test_cannot_create_faixa_with_invalid_data()
     {
         // Make a POST request to the /api/faixas endpoint with invalid data
-        $response = $this->postJson('/api/faixas/create', [
+        $response = $this->postJson('/api/faixas/', [
             'nome' => '',
             'urlPath' => '',
         ]);

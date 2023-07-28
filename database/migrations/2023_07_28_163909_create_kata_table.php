@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('descricao')->type('text');
             $table->string('url');
             $table->uuid('faixa_id');
-            $table->foreign('faixa_id')->references('id')->on('faixas');
+            $table->foreign('faixa_id')->references('id')->on('faixas')->onDelete('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kata');
+        Schema::dropIfExists('katas');
     }
 };
