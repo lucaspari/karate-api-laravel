@@ -11,7 +11,8 @@ class FaixaControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function setUp() : void{
+    public function setUp(): void
+    {
         parent::setUp(); // @BeforeEach
         Faixa::query()->delete();
     }
@@ -35,7 +36,6 @@ class FaixaControllerTest extends TestCase
             "nome" => $faixa->nome,
             "urlPath" => $faixa->urlPath
         ]);
-
     }
     public function test_returns_404_for_invalid_faixa_id()
     {
@@ -49,5 +49,46 @@ class FaixaControllerTest extends TestCase
         $response->assertJsonFragment([
             'message' => 'Faixa não encontrada!',
         ]);
+    }
+
+    public function test_can_create_faixa_with_valid_data()
+    {
+        // Make a POST request to the /api/faixas endpoint with valid data
+        $response = $this->postJson('/api/faixas/create', [
+            'nome' => 'Faixa 1',
+            'urlPath' => '/path/to/faixa1.mp3',
+        ]);
+
+        // Assert that the response status is 201 Created
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        // Assert that the response contains the expected data
+        $response->assertJson([
+            'message' => 'Faixa criada com sucesso!',
+            'data' => [
+                'nome' => 'Faixa 1',
+                'urlPath' => '/path/to/faixa1.mp3',
+            ],
+        ]);
+    }
+
+    public function test_cannot_create_faixa_with_invalid_data()
+    {
+        // Make a POST request to the /api/faixas endpoint with invalid data
+        $response = $this->postJson('/api/faixas/create', [
+            'nome' => '',
+            'urlPath' => '',
+        ]);
+        // Assert that the response status is 422 Unprocessable Entity
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $errors = json_decode($response->getContent(), true);
+        // Convert the array to a JSON string with the expected error messages
+        $expected = json_encode([
+            'nome' => ['The nome field is required.'],
+            'urlPath' => ['The url path field is required.'],
+        ]);
+
+        // Assert that the response content matches the expected error messages
+        $this->assertEquals($expected, json_encode($errors));
     }
 }
