@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/faixas', [FaixaController::class, 'index'])->name('faixa.index');
-Route::post('/faixas/create', [FaixaController::class, 'store'])->name('faixa.store');
-Route::get("/faixas/{id}", [FaixaController::class, 'show'])->name('faixa.show');
-Route::put("/faixas/{id}", [FaixaController::class, 'update'])->name('faixa.update');
-Route::delete("/faixas/{id}", [FaixaController::class, 'destroy'])->name('faixa.destroy');
+Route::resource('faixas', FaixaController::class)->except([
+    'create', 'edit'
+]);
+Route::resource('katas', KataController::class)->except([
+    'create', 'edit'
+]);
