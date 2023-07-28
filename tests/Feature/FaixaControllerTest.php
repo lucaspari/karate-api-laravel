@@ -145,4 +145,43 @@ public function test_cannot_update_faixa_with_invalid_data()
     // Assert that the response content matches the expected error messages
     $this->assertEquals($expected, json_encode($errors));
 }
+public function test_can_delete_faixa()
+{
+    // Create a new Faixa
+    $faixa = Faixa::factory()->createOne();
+
+    // Make a DELETE request to the /api/faixas/{id} endpoint
+    $response = $this->deleteJson("/api/faixas/{$faixa->id}");
+
+    // Assert that the response status is 200 OK
+    $response->assertStatus(Response::HTTP_OK);
+
+    // Assert that the response contains the expected message and data
+    $response->assertJson([
+        'message' => 'Faixa deletada com sucesso!',
+        'data' => [
+            'nome' => $faixa->nome,
+            'urlPath' => $faixa->urlPath,
+        ],
+    ]);
+
+    // Assert that the Faixa was deleted from the database
+    $this->assertDatabaseMissing('faixas', [
+        'id' => $faixa->id,
+    ]);
+}
+
+public function test_cannot_delete_nonexistent_faixa()
+{
+    // Make a DELETE request to the /api/faixas/{id} endpoint with an invalid ID
+    $response = $this->deleteJson('/api/faixas/999');
+
+    // Assert that the response status is 404 Not Found
+    $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+    // Assert that the response contains the expected message
+    $response->assertJson([
+        'message' => 'Faixa não encontrada!',
+    ]);
+}
 }
