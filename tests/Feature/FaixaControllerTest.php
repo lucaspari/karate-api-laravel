@@ -91,4 +91,58 @@ class FaixaControllerTest extends TestCase
         // Assert that the response content matches the expected error messages
         $this->assertEquals($expected, json_encode($errors));
     }
+    public function test_can_update_faixa()
+{
+    // Create a new Faixa
+    $faixa = Faixa::factory()->createOne();
+
+    // Make a PUT request to the /api/faixas/{id} endpoint with valid data
+    $response = $this->putJson("/api/faixas/{$faixa->id}", [
+        'nome' => 'Nova Faixa',
+        'urlPath' => '/path/to/nova_faixa.mp3',
+    ]);
+
+    // Assert that the response status is 200 OK
+    $response->assertStatus(Response::HTTP_OK);
+
+    // Assert that the response contains the expected message and data
+    $response->assertJson([
+        'message' => 'Faixa atualizada com sucesso!',
+        'data' => [
+            'nome' => 'Nova Faixa',
+            'urlPath' => '/path/to/nova_faixa.mp3',
+        ],
+    ]);
+
+    // Assert that the Faixa was updated in the database
+    $this->assertDatabaseHas('faixas', [
+        'id' => $faixa->id,
+        'nome' => 'Nova Faixa',
+        'urlPath' => '/path/to/nova_faixa.mp3',
+    ]);
+}
+public function test_cannot_update_faixa_with_invalid_data()
+{
+    // Create a new Faixa
+    $faixa = Faixa::factory()->createOne();
+
+    // Make a PUT request to the /api/faixas/{id} endpoint with invalid data
+    $response = $this->putJson("/api/faixas/{$faixa->id}", [
+        'nome' => '',
+        'urlPath' => '',
+    ]);
+
+    // Assert that the response status is 422 Unprocessable Entity
+    $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+    $errors = json_decode($response->getContent(), true);
+    // Convert the array to a JSON string with the expected error messages
+    $expected = json_encode([
+        'nome' => ['The nome field is required.'],
+        'urlPath' => ['The url path field is required.'],
+    ]);
+
+    // Assert that the response content matches the expected error messages
+    $this->assertEquals($expected, json_encode($errors));
+}
 }
