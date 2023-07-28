@@ -17,7 +17,7 @@ class FaixaFactory extends Factory
     public function definition(): array
     {
         return [
-            'id'=> fake()->uuid(),
+            'id'=> fake()->unique()->uuid(),
             'nome'=> fake()->name(),
             'urlPath'=> fake()->url(),
         ];

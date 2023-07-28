@@ -19,24 +19,12 @@ class FaixaController extends Controller
     {
         return Faixa::all();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
 
         try {
             $this->faixaService->validate_faixa($request);
             $faixa = new Faixa([
-                'id' => Uuid::uuid4()->toString(),
                 'nome' => $request->nome,
                 'urlPath' => $request->urlPath
             ]);
@@ -47,10 +35,6 @@ class FaixaController extends Controller
             return response()->json($e->errors(), 422);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $faixa = Faixa::find($id);

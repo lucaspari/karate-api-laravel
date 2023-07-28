@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 return new class extends Migration
@@ -12,10 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('faixas', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(Str::uuid()->toString());
+            $table->uuid('id')->primary();
             $table->string('nome');
             $table->string('urlPath');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); 
             
         });
     }
