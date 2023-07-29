@@ -18,7 +18,7 @@ class KataControllerTest extends TestCase
     public function test_can_get_all_katas()
     {
         Kata::factory()->count(3)->create();
-        $response = $this->getJson('/api/faixas');
+        $response = $this->getJson('/api/katas');
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonCount(3);
     }

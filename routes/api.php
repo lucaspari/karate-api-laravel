@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FaixaController;
+use App\Http\Controllers\GolpeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KataController;
 /*
@@ -19,4 +20,7 @@ Route::resource('faixas', FaixaController::class)->except([
 ]);
 Route::resource('katas', KataController::class)->except([
     'create', 'edit'
+]);
+Route::resource("golpes",GolpeController::class)->except([
+    'create','edit'
 ]);
