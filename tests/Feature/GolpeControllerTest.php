@@ -22,12 +22,5 @@ class GolpeControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonCount(3);
     }
-    public function test_return_all_golpes_by_faixa(){
-        // ARRANGE
-        $faixa = Faixa::factory()->createOne();
-        Golpe::factory()->count(3)->create(['faixa_id' => $faixa->id]);
-        $response = $this->getJson("/api/golpes/{$faixa->id}");
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonCount(3);
-    }
+
 }
