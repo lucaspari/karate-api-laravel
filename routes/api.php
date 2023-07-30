@@ -18,6 +18,6 @@ use App\Http\Controllers\KataController;
 Route::resource('faixas', FaixaController::class)->except([
     'create', 'edit'
 ]);
-Route::get('katas', [KataController::class, 'index']);
-Route::get('katas/{faixaId}', [KataController::class, 'findKataByFaixaId']);
+Route::get('katas', [KataController::class, 'index'])->name('kata.index');
+Route::get('katas/{faixaId}', [KataController::class, 'findKataByFaixaId'])->name("kata.findByFaixaId");
 
