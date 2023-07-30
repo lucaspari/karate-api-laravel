@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Faixa;
 use App\Models\Kata;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,5 +22,25 @@ class KataControllerTest extends TestCase
         $response = $this->getJson('/api/katas');
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonCount(3);
+    }
+    public function test_find_kata_by_faixa_id(){
+        $faixa = Faixa::factory()->createOne();
+        $kata = Kata::factory()->createOne(['faixa_id' => $faixa->id]);
+        $response = $this->getJson("/api/katas/{$faixa->id}");
+        $response->assertStatus(RESPONSE::HTTP_OK);
+        $response->assertJsonFragment([
+            "id" => $kata->id,
+            "nome" => $kata->nome,
+            "descricao" => $kata->descricao,
+            "url" => $kata->url,
+            "faixa_id" => $kata->faixa_id,
+            "created_at" => $kata->created_at,
+            "updated_at" => $kata->updated_at
+        ]);
+    }
+    public function test_find_kata_by_faixa_id_not_found(){
+        $response = $this->getJson('/api/katas/999');
+        $response->assertNotFound();
+        $response->assertStatus(RESPONSE::HTTP_NOT_FOUND);
     }
 }

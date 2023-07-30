@@ -18,9 +18,6 @@ use App\Http\Controllers\KataController;
 Route::resource('faixas', FaixaController::class)->except([
     'create', 'edit'
 ]);
-Route::resource('katas', KataController::class)->except([
-    'create', 'edit'
-]);
-Route::resource("golpes",GolpeController::class)->except([
-    'create','edit'
-]);
+Route::get('katas', [KataController::class, 'index']);
+Route::get('katas/{faixaId}', [KataController::class, 'findKataByFaixaId']);
+
