@@ -1,19 +1,13 @@
 <?php
 namespace App\Service;
-
-use App\Exceptions\GolpeNotFoundException;
 use App\Models\Golpe;
-use Exception;
-use Illuminate\Support\Facades\Log;
 class GolpeService{
     public function findByUrlPath(string $url){
-        try{
-             $golpe = Golpe::query()->where("urlPath",$url)->firstOrFail();
+             $golpe = Golpe::query()->where("urlPath",$url)->first();
              return $golpe;
-        }
-        catch(Exception $e){
-            Log::error($e->getMessage());
-            throw new GolpeNotFoundException($url);
-        }
+    }
+    public function findByFaixaId(string $faixaId){
+             $golpes = Golpe::query()->where("faixa_id",$faixaId)->get();
+             return $golpes;
     }
 }

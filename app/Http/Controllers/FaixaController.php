@@ -6,7 +6,6 @@ use App\Models\Faixa;
 use App\Service\FaixaService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Ramsey\Uuid\Uuid;
 
 class FaixaController extends Controller
 {
