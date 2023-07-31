@@ -26,4 +26,12 @@ class GolpeController extends Controller
 
         return response()->json($golpes, 200);
     }
+    public function random()
+    {
+        $golpe = $this->golpeService->getRandomGolpe();
+        if (!$golpe) {
+            throw new GolpeNotFoundException();
+        }
+        return response()->json([$golpe], 200);
+    }
 }

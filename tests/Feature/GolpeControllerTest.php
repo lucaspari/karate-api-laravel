@@ -51,6 +51,16 @@ class GolpeControllerTest extends TestCase
         $response = $this->getJson("/api/golpes?urlPath=nao-existe");
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
+    public function test_return_random_golpe(){
+        Golpe::factory()->count(3)->create();
+        $response = $this->getJson("/api/golpes/random");
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJsonCount(1);
+    }
+    public function test_throw_golpeNotFoundException_when_random_golpe(){
+        $response = $this->getJson("/api/golpes/random");
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
 
 
 }
