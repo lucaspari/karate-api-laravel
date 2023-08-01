@@ -19,7 +19,6 @@ Route::resource('faixas', FaixaController::class)->except([
     'create', 'edit'
 ]);
 Route::get('katas', [KataController::class, 'index'])->name('kata.index');
-Route::get('katas/{faixaId}', [KataController::class, 'findKataByFaixaId'])->name("kata.findByFaixaId");
 Route::get("golpes", [GolpeController::class, 'index'])->name("golpe.index");
 Route::get("golpes/random", [GolpeController::class, 'random'])->name("golpe.random");
 

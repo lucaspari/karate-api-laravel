@@ -26,7 +26,7 @@ class KataControllerTest extends TestCase
     public function test_find_kata_by_faixa_id(){
         $faixa = Faixa::factory()->createOne();
         $kata = Kata::factory()->createOne(['faixa_id' => $faixa->id]);
-        $response = $this->getJson("/api/katas/{$faixa->id}");
+        $response = $this->getJson("/api/katas?faixaId={$faixa->id}");
         $response->assertStatus(RESPONSE::HTTP_OK);
         $response->assertJsonFragment([
             "id" => $kata->id,

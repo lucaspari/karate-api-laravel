@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Service\GolpeService;
+use App\Service\KataService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(GolpeService::class, function ($app) {
             return new GolpeService();
+        });
+
+        $this->app->bind(KataService::class,function ($app){
+            return new KataService();
         });
     }
 
