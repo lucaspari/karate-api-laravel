@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Service\FaixaService;
 use App\Service\GolpeService;
 use App\Service\KataService;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(KataService::class,function ($app){
             return new KataService();
+        });
+        $this->app->bind(FaixaService::class,function ($app){
+            return new FaixaService();
         });
     }
 

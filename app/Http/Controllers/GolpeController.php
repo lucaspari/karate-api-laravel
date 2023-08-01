@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\GolpeNotFoundException;
 use App\Models\Golpe;
 use App\Service\GolpeService;
+use Illuminate\Http\JsonResponse;
 
 class GolpeController extends Controller
 {
@@ -13,7 +14,11 @@ class GolpeController extends Controller
     {
         $this->golpeService = $golpeService;
     }
-    public function index()
+
+    /**
+     * @throws GolpeNotFoundException
+     */
+    public function index() : JsonResponse
     {
         $url = request()->query('urlPath');
         $faixaId = request()->query('faixaId');
@@ -26,7 +31,11 @@ class GolpeController extends Controller
 
         return response()->json($golpes, 200);
     }
-    public function random()
+
+    /**
+     * @throws GolpeNotFoundException
+     */
+    public function random(): JsonResponse
     {
         $golpe = $this->golpeService->getRandomGolpe();
         if (!$golpe) {

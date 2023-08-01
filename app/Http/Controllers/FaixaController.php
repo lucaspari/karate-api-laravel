@@ -9,14 +9,16 @@ use Illuminate\Validation\ValidationException;
 
 class FaixaController extends Controller
 {
-    private $faixaService;
+    private FaixaService $faixaService;
     public function __construct(FaixaService $faixaService)
     {
         $this->faixaService = $faixaService;
     }
     public function index()
     {
-        return Faixa::all();
+        $nome = request()->query("urlPath");
+        if(isset($nome)) return $this->faixaService->getFaixaByNome($nome);
+        return $this->faixaService->getAllFaixas();
     }
     public function store(Request $request)
     {
