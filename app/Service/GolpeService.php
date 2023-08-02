@@ -14,8 +14,14 @@ class GolpeService
     {
         return Golpe::query()->where("faixa_id", $faixaId)->get();
     }
-    public function getRandomGolpe()
+    public function getRandomGolpe($distinct = "",$qtd = 1, )
     {
-        return Golpe::query()->inRandomOrder()->first();
+        if ($qtd === 1) {
+            return Golpe::query()->inRandomOrder()->first();
+        } else {
+            return Golpe::query()->where('urlPath', 'not like', '%' . $distinct . '%')
+                ->limit(2)->inRandomOrder()
+                ->get();
+        }
     }
 }

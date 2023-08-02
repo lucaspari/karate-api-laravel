@@ -37,10 +37,13 @@ class GolpeController extends Controller
      */
     public function random(): JsonResponse
     {
-        $golpe = $this->golpeService->getRandomGolpe();
+        $qtd = request()->query('qtd');
+        $distinct = request()->query('distinct');
+        if(isset($qtd)) $golpe = $this->golpeService->getRandomGolpe( $distinct,(int)$qtd);
+        else $golpe = $this->golpeService->getRandomGolpe();
         if (!$golpe) {
             throw new GolpeNotFoundException();
         }
-        return response()->json([$golpe], 200);
+        return response()->json($golpe, 200);
     }
 }
