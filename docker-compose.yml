@@ -48,9 +48,21 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    kata-front:
+        image: kata-academy-app
+        ports:
+            - '3000:3000'
+        networks:
+            - sail
+        volumes:
+            - 'my-next-app:/app'
+        depends_on:
+            - laravel.test
+            - mysql
 networks:
     sail:
         driver: bridge
 volumes:
     sail-mysql:
         driver: local
+    my-next-app:
