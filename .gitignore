@@ -1,6 +1,5 @@
 # Laravel specific files and directories
-/.env
-/.env.*
+.env
 /node_modules
 /vendor
 /public/hot
