@@ -1,0 +1,56 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: kata_academy
+      DB_USERNAME: root
+      DB_PASSWORD: password
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: 'mysql'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Create .env file
+        run: cp .env.ci .env
+
+      - name: Migrations
+        run: php artisan migrate
+
+      - name: Delay before running tests
+        run: sleep 15  # Adjust the sleep duration as needed
+
+      - name: Run tests
+        run: php artisan test
