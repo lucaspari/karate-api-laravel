@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class FaixaService{
 
 
-    function validate_faixa(Request $request){
+    function validate_faixa(Request $request): void
+    {
         $request->validate([
             'nome' => 'required',
             "urlPath" => "required"

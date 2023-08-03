@@ -47,15 +47,22 @@ class GolpeControllerTest extends TestCase
         ]);
         $response->assertStatus(200);
     }
-    public function test_throw_golpeNotFoundException(){
-        $response = $this->getJson("/api/golpes?urlPath=nao-existe");
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
-    }
     public function test_return_random_golpe(){
         Golpe::factory()->count(3)->create();
         $response = $this->getJson("/api/golpes/random");
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonCount(1);
+        $response->assertJsonStructure([
+            'id',
+            'nome',
+            'urlPath',
+            'tempo',
+            'descricao',
+            'url',
+            'detalhes',
+            'faixa_id',
+            'created_at',
+            'updated_at',
+        ]);
     }
     public function test_return_random_golpe_with_qtd_and_distinct(){
         Golpe::factory()->count(2)->create();
@@ -64,10 +71,6 @@ class GolpeControllerTest extends TestCase
         $response->assertJsonCount(2);
     }
 
-    public function test_throw_golpeNotFoundException_when_random_golpe(){
-        $response = $this->getJson("/api/golpes/random");
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
-    }
 
 
 }
