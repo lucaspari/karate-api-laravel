@@ -22,7 +22,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: password
+          MYSQL_DATABASE: kata_academy
         ports:
           - 3306:3306
         options: >-
