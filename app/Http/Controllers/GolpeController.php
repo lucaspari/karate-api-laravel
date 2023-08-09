@@ -45,7 +45,7 @@ class GolpeController extends Controller
         }
         try {
 
-            $this->golpeService->saveGolpesByFaixaId($faixaId, $golpes);
+            $this->golpeService->saveGolpesByFaixaId($faixaId, $golpes->all());
             return response()->json();
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 400);

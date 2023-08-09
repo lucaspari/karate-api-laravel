@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\Golpe;
 use Illuminate\http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class GolpeService
 {
@@ -29,12 +30,21 @@ class GolpeService
         }
     }
 
-    public function saveGolpesByFaixaId(string $id, object $golpes): void
+    public function saveGolpesByFaixaId(string $id, array $golpes): void
     {
-        foreach ($golpes as $golpe) {
-            $golpe['faixa_id'] = $id;
-            Golpe::query()->create($golpe);
-        }
+        $golpesToInsert = array_map(function ($golpe) use ($id) {
+            return [
+                "id" => substr(Str::uuid()->toString(), 0, 32),
+                "nome" => $golpe['nome'],
+                "urlPath" => $golpe['urlPath'],
+                "tempo" => $golpe['tempo'],
+                "descricao" => $golpe['descricao'],
+                "url" => $golpe['url'],
+                "detalhes" => $golpe['detalhes'],
+                "faixa_id" => $id
+            ];
+        }, $golpes);
+        Golpe::query()->insert($golpesToInsert);
     }
 
     public function check_if_is_golpe($golpes): \Illuminate\Validation\Validator
